@@ -5,21 +5,26 @@ using namespace v8;
 PTAMWrap::PTAMWrap() {};
 PTAMWrap::~PTAMWrap() {};
 
-Persistent<Function> PTAMWrap::constructor;
+Persistent<FunctionTemplate> PTAMWrap::constructor;
 
-void PTAMWrap::Init() {
+void PTAMWrap::Init(Handle<Object> target) {
+	HandleScope scope;
+
 	// Prepare constructor template
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("PTAM"));
-	tpl->InstanceTemplate()->SetInternalFieldCount(0);
-	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("addFrame"), FunctionTemplate::New(AddFrame)->GetFunction());
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("on"), FunctionTemplate::New(On)->GetFunction());
+    Local<String> name = String::NewSymbol("PTAM");
 
-	constructor = Persistent<Function>::New(tpl->GetFunction());
+	constructor = Persistent<FunctionTemplate>::New(tpl);
+	constructor->InstanceTemplate()->SetInternalFieldCount(1);
+	tpl->SetClassName(name);
 
-	//Local<Value> size = Integer::NewFromUnsigned(256);
-	//Local<Object> array = uint32_array_constructor->NewInstance(1, &size);
+	// Add all prototype methods, getters and setters here.
+    NODE_SET_PROTOTYPE_METHOD(constructor, "addFrame", AddFrame);
+    NODE_SET_PROTOTYPE_METHOD(constructor, "on", On);
+
+    // This has to be last, otherwise the properties won't show up on the
+    // object in JavaScript.
+    target->Set(name, constructor->GetFunction());
 }
 
 Handle<Value> PTAMWrap::New(const Arguments& args) {
@@ -45,16 +50,6 @@ Handle<Value> PTAMWrap::New(const Arguments& args) {
 	obj->ptam.setup();
 
 	return args.This();
-}
-
-Handle<Value> PTAMWrap::NewInstance(const Arguments& args) {
-	HandleScope scope;
-
-	const unsigned argc = 1;
-	Handle<Value> argv[argc] = { args[0] };
-	Local<Object> instance = constructor->NewInstance(argc, argv);
-
-	return scope.Close(instance);
 }
 
 Handle<Value> PTAMWrap::AddFrame(const Arguments& args) {
@@ -127,3 +122,8 @@ Handle<Value> PTAMWrap::On(const Arguments& args) {
 
 	return scope.Close(args.This());
 }
+
+void init(Handle<Object> target) {
+	PTAMWrap::Init(target);
+}
+NODE_MODULE(ptam, init)

@@ -5,11 +5,10 @@
             "ptam-core"
         ],
         "sources": [
-            "src/ptam.cc",
             "src/PTAMWrap.cpp"
         ],
         "include_dirs": [
-            '../libcvd_installed/include',
+            '../libcvd_installed/Release/include',
             '../TooN-2.0',
             "../glew-1.9.0/include",
             "../gvars-3.0",
@@ -19,7 +18,7 @@
         "libraries": [
             "../../Libs/liblapack.lib",
             "../../Libs/libblas.lib",
-            "../../libcvd_installed/lib/libcvd.lib",
+            "../../libcvd_installed/Release/lib/libcvd.lib",
             "../../glew-1.9.0/lib/glew32s.lib",
             "../../gvars3_installed/lib/gvars3-headless.lib",
             "../../pthreads-w32-2-9-1-release/Pre-built.2/lib/x86/pthreadVSE2.lib"
@@ -55,7 +54,7 @@
             #"PTAM/VideoSource_Win32_CMU1394.cc"
         ],
         "include_dirs": [
-            "../libcvd_installed/include",
+            "../libcvd_installed/Release/include",
             '../TooN-2.0',
             "../glew-1.9.0/include",
             "../gvars-3.0",
@@ -65,7 +64,7 @@
         "libraries": [
             "../../Libs/liblapack.lib",
             "../../Libs/libblas.lib",
-            "../../libcvd_installed/lib/libcvd.lib",
+            "../../libcvd_installed/Release/lib/libcvd.lib",
             "../../glew-1.9.0/lib/glew32s.lib",
             "../../gvars3_installed/lib/gvars3-headless.lib",
             "../../pthreads-w32-2-9-1-release/Pre-built.2/lib/x86/pthreadVSE2.lib"
