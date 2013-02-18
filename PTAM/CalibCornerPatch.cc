@@ -1,6 +1,6 @@
 // Copyright 2008 Isis Innovation Limited
 #include "CalibCornerPatch.h"
-#include "OpenGL.h"
+//#include "OpenGL.h"
 #include <TooN/helpers.h>
 #include <cvd/vector_image_ref.h>
 #include <cvd/vision.h>
@@ -93,11 +93,11 @@ bool CalibCornerPatch::IterateOnImageWithDrawing(CalibCornerPatch::Params &param
   bool bReturn = IterateOnImage(params, im);
   if(!bReturn)
     {
-      glPointSize(3);
+      /*glPointSize(3);
       glColor3f(1,0,0);
       glBegin(GL_POINTS);
       glVertex(params.v2Pos);
-      glEnd();
+      glEnd();*/
     }
   return bReturn;
 }

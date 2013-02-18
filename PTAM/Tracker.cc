@@ -1,5 +1,5 @@
 // Copyright 2008 Isis Innovation Limited
-#include "OpenGL.h"
+//#include "OpenGL.h"
 #include "Tracker.h"
 #include "MEstimator.h"
 #include "ShiTomasi.h"
@@ -80,7 +80,7 @@ void Tracker::Reset()
 // It figures out what state the tracker is in, and calls appropriate internal tracking
 // functions. bDraw tells the tracker wether it should output any GL graphics
 // or not (it should not draw, for example, when AR stuff is being shown.)
-void Tracker::TrackFrame(Image<byte> &imFrame, bool bDraw)
+void Tracker::TrackFrame(Image<CVD::byte> &imFrame, bool bDraw)
 {
   mbDraw = bDraw;
   mMessageForUser.str("");   // Wipe the user message clean
@@ -109,17 +109,17 @@ void Tracker::TrackFrame(Image<byte> &imFrame, bool bDraw)
   // From now on we only use the keyframe struct!
   mnFrame++;
   
-  if(mbDraw)
-    {
-      glDrawPixels(mCurrentKF.aLevels[0].im);
-      if(GV2.GetInt("Tracker.DrawFASTCorners",0, SILENT))
-	{
-	  glColor3f(1,0,1);  glPointSize(1); glBegin(GL_POINTS);
-	  for(unsigned int i=0; i<mCurrentKF.aLevels[0].vCorners.size(); i++) 
-	    glVertex(mCurrentKF.aLevels[0].vCorners[i]);
-	  glEnd();
-	}
-    }
+ // if(mbDraw)
+ //   {
+ //     glDrawPixels(mCurrentKF.aLevels[0].im);
+ //     if(GV2.GetInt("Tracker.DrawFASTCorners",0, SILENT))
+	//{
+	//  glColor3f(1,0,1);  glPointSize(1); glBegin(GL_POINTS);
+	//  for(unsigned int i=0; i<mCurrentKF.aLevels[0].vCorners.size(); i++) 
+	//    glVertex(mCurrentKF.aLevels[0].vCorners[i]);
+	//  glEnd();
+	//}
+ //   }
   
   // Decide what to do - if there is a map, try to track the map ...
   if(mMap.IsGood())
@@ -193,48 +193,48 @@ bool Tracker::AttemptRecovery()
 // Draw the reference grid to give the user an idea of wether tracking is OK or not.
 void Tracker::RenderGrid()
 {
-  // The colour of the ref grid shows if the coarse stage of tracking was used
-  // (it's turned off when the camera is sitting still to reduce jitter.)
-  if(mbDidCoarse)
-    glColor4f(.0, 0.5, .0, 0.6);
-  else
-    glColor4f(0,0,0,0.6);
-  
-  // The grid is projected manually, i.e. GL receives projected 2D coords to draw.
-  int nHalfCells = 8;
-  int nTot = nHalfCells * 2 + 1;
-  Image<Vector<2> >  imVertices(ImageRef(nTot,nTot));
-  for(int i=0; i<nTot; i++)
-    for(int j=0; j<nTot; j++)
-      {
-	Vector<3> v3;
-	v3[0] = (i - nHalfCells) * 0.1;
-	v3[1] = (j - nHalfCells) * 0.1;
-	v3[2] = 0.0;
-	Vector<3> v3Cam = mse3CamFromWorld * v3;
-	if(v3Cam[2] < 0.001)
-	  v3Cam[2] = 0.001;
-	imVertices[i][j] = mCamera.Project(project(v3Cam));
-      }
-  glEnable(GL_LINE_SMOOTH);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glLineWidth(2);
-  for(int i=0; i<nTot; i++)
-    {
-      glBegin(GL_LINE_STRIP);
-      for(int j=0; j<nTot; j++)
-	glVertex(imVertices[i][j]);
-      glEnd();
-      
-      glBegin(GL_LINE_STRIP);
-      for(int j=0; j<nTot; j++)
-	glVertex(imVertices[j][i]);
-      glEnd();
-    };
-  
-  glLineWidth(1);
-  glColor3f(1,0,0);
+ // // The colour of the ref grid shows if the coarse stage of tracking was used
+ // // (it's turned off when the camera is sitting still to reduce jitter.)
+ // if(mbDidCoarse)
+ //   glColor4f(.0, 0.5, .0, 0.6);
+ // else
+ //   glColor4f(0,0,0,0.6);
+ // 
+ // // The grid is projected manually, i.e. GL receives projected 2D coords to draw.
+ // int nHalfCells = 8;
+ // int nTot = nHalfCells * 2 + 1;
+ // Image<Vector<2> >  imVertices(ImageRef(nTot,nTot));
+ // for(int i=0; i<nTot; i++)
+ //   for(int j=0; j<nTot; j++)
+ //     {
+	//Vector<3> v3;
+	//v3[0] = (i - nHalfCells) * 0.1;
+	//v3[1] = (j - nHalfCells) * 0.1;
+	//v3[2] = 0.0;
+	//Vector<3> v3Cam = mse3CamFromWorld * v3;
+	//if(v3Cam[2] < 0.001)
+	//  v3Cam[2] = 0.001;
+	//imVertices[i][j] = mCamera.Project(project(v3Cam));
+ //     }
+ // glEnable(GL_LINE_SMOOTH);
+ // glEnable(GL_BLEND);
+ // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+ // glLineWidth(2);
+ // for(int i=0; i<nTot; i++)
+ //   {
+ //     glBegin(GL_LINE_STRIP);
+ //     for(int j=0; j<nTot; j++)
+	//glVertex(imVertices[i][j]);
+ //     glEnd();
+ //     
+ //     glBegin(GL_LINE_STRIP);
+ //     for(int j=0; j<nTot; j++)
+	//glVertex(imVertices[j][i]);
+ //     glEnd();
+ //   };
+ // 
+ // glLineWidth(1);
+ // glColor3f(1,0,0);
 }
 
 // Routine for establishing the initial map. This requires two spacebar presses from the user
@@ -320,7 +320,7 @@ void Tracker::TrailTracking_Start()
 int Tracker::TrailTracking_Advance()
 {
   int nGoodTrails = 0;
-  if(mbDraw)
+  /*if(mbDraw)
     {
       glPointSize(5);
       glLineWidth(2);
@@ -329,7 +329,7 @@ int Tracker::TrailTracking_Advance()
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glEnable(GL_BLEND);
       glBegin(GL_LINES);
-    }
+    }*/
   
   MiniPatch BackwardsPatch;
   Level &lCurrentFrame = mCurrentKF.aLevels[0];
@@ -355,25 +355,25 @@ int Tracker::TrailTracking_Advance()
 	  trail.irCurrentPos = irEnd;
 	  nGoodTrails++;
 	}
-      if(mbDraw)
-	{
-	  if(!bFound)
-	    glColor3f(0,1,1); // Failed trails flash purple before dying.
-	  else
-	    glColor3f(1,1,0);
-	  glVertex(trail.irInitialPos);
-	  if(bFound) glColor3f(1,0,0);
-	  glVertex(trail.irCurrentPos);
-	}
+ //     if(mbDraw)
+	//{
+	//  if(!bFound)
+	//    glColor3f(0,1,1); // Failed trails flash purple before dying.
+	//  else
+	//    glColor3f(1,1,0);
+	//  glVertex(trail.irInitialPos);
+	//  if(bFound) glColor3f(1,0,0);
+	//  glVertex(trail.irCurrentPos);
+	//}
       if(!bFound) // Erase from list of trails if not found this frame.
 	{
 	  mlTrails.erase(i);
 	}
 	  i = next;
     }
-  if(mbDraw)
+  /*if(mbDraw)
     glEnd();
-
+*/
   mPreviousFrameKF = mCurrentKF;
   return nGoodTrails;
 }
@@ -623,7 +623,7 @@ void Tracker::TrackMap()
       v6LastUpdate = v6Update;
     };
   
-  if(mbDraw)
+  /*if(mbDraw)
     {
       glPointSize(6);
       glEnable(GL_BLEND);
@@ -641,7 +641,7 @@ void Tracker::TrackMap()
 	}
       glEnd();
       glDisable(GL_BLEND);
-    }
+    }*/
   
   // Update the current keyframe with info on what was found in the frame.
   // Strictly speaking this is unnecessary to do every frame, it'll only be

@@ -1,0 +1,35 @@
+Building the projects in this solution one at a time. To enable parallel build, please add the "/m" switch.
+Build started 18/02/2013 12:44:46.
+Project "C:\Code\PTAM\build\binding.sln" on node 1 (default targets).
+ValidateSolutionConfiguration:
+  Building solution configuration "Release|x64".
+Project "C:\Code\PTAM\build\binding.sln" (1) is building "C:\Code\PTAM\build\ptam.vcxproj.metaproj" (2) on node 1 (default targets).
+Project "C:\Code\PTAM\build\ptam.vcxproj.metaproj" (2) is building "C:\Code\PTAM\build\ptam-core.vcxproj" (3) on node 1 (default targets).
+InitializeBuildStatus:
+  Touching "Release\obj\ptam-core\ptam-core.unsuccessfulbuild".
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\hitsthings\.node-gyp\0.8.15\src" /I"C:\Users\hitsthings\.node-gyp\0.8.15\deps\uv\include" /I"C:\Users\hitsthings\.node-gyp\0.8.15\deps\v8\include" /I..\include /I..\PTAM /Zi /nologo /W3 /WX- /Ox /Ob2 /Oi /Ot /Oy /GL /D WIN32 /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D BUILDING_V8_SHARED=1 /D BUILDING_UV_SHARED=1 /D BUILDING_NODE_EXTENSION /D _WINDLL /GF /Gm- /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /GR- /Fo"Release\obj\ptam-core\\" /Fd"Release\obj\ptam-core\vc110.pdb" /Gd /TP /wd4251 /errorReport:queue /MP ..\PTAM\VideoSource_Win32_CMU1394.cc ..\PTAM\VideoSource_Linux_V4L.cc ..\PTAM\VideoSource_Linux_DV.cc
+  VideoSource_Win32_CMU1394.cc
+  VideoSource_Linux_V4L.cc
+  VideoSource_Linux_DV.cc
+..\PTAM\VideoSource_Linux_DV.cc(2): fatal error C1083: Cannot open include file: 'VideoSource.h': No such file or directory [C:\Code\PTAM\build\ptam-core.vcxproj]
+..\PTAM\VideoSource_Win32_CMU1394.cc(7): fatal error C1083: Cannot open include file: 'VideoSource.h': No such file or directory [C:\Code\PTAM\build\ptam-core.vcxproj]
+..\PTAM\VideoSource_Linux_V4L.cc(2): fatal error C1083: Cannot open include file: 'VideoSource.h': No such file or directory [C:\Code\PTAM\build\ptam-core.vcxproj]
+Done Building Project "C:\Code\PTAM\build\ptam-core.vcxproj" (default targets) -- FAILED.
+Done Building Project "C:\Code\PTAM\build\ptam.vcxproj.metaproj" (default targets) -- FAILED.
+Done Building Project "C:\Code\PTAM\build\binding.sln" (default targets) -- FAILED.
+
+Build FAILED.
+
+"C:\Code\PTAM\build\binding.sln" (default target) (1) ->
+"C:\Code\PTAM\build\ptam.vcxproj.metaproj" (default target) (2) ->
+"C:\Code\PTAM\build\ptam-core.vcxproj" (default target) (3) ->
+(ClCompile target) -> 
+  ..\PTAM\VideoSource_Linux_DV.cc(2): fatal error C1083: Cannot open include file: 'VideoSource.h': No such file or directory [C:\Code\PTAM\build\ptam-core.vcxproj]
+  ..\PTAM\VideoSource_Win32_CMU1394.cc(7): fatal error C1083: Cannot open include file: 'VideoSource.h': No such file or directory [C:\Code\PTAM\build\ptam-core.vcxproj]
+  ..\PTAM\VideoSource_Linux_V4L.cc(2): fatal error C1083: Cannot open include file: 'VideoSource.h': No such file or directory [C:\Code\PTAM\build\ptam-core.vcxproj]
+
+    0 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:00.36

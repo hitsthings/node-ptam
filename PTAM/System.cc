@@ -6,8 +6,8 @@
 #include "ATANCamera.h"
 #include "MapMaker.h"
 #include "Tracker.h"
-#include "ARDriver.h"
-#include "MapViewer.h"
+//#include "ARDriver.h"
+//#include "MapViewer.h"
 
 using namespace CVD;
 using namespace std;
@@ -37,8 +37,8 @@ System::setup()
   mpMap = new Map;
   mpMapMaker = new MapMaker(*mpMap, *mpCamera);
   mpTracker = new Tracker(videoSize, *mpCamera, *mpMap, *mpMapMaker);
-  mpARDriver = new ARDriver(*mpCamera, videoSize);
-  mpMapViewer = new MapViewer(*mpMap);
+  //mpARDriver = new ARDriver(*mpCamera, videoSize);
+  //mpMapViewer = new MapViewer(*mpMap);
   
   mbDone = false;
 };
@@ -53,12 +53,12 @@ void System::update()
 		static bool bFirstFrame = true;
 		if(bFirstFrame)
 		{
-			mpARDriver->Init();
+			//mpARDriver->Init();
 			bFirstFrame = false;
 		}
 		
-		if(!mpMap->IsGood())
-			mpARDriver->Reset();
+		//if(!mpMap->IsGood())
+		//	mpARDriver->Reset();
 		
 		mpTracker->TrackFrame(mimFrameBW, false);		
 	}

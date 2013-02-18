@@ -61,16 +61,7 @@ inline void glMultMatrix(SE3<> se3)
 //--------------------------------------------------------------
 void
 testApp::setup()
-{
-	bDrawMap	= false;
-	bDrawAR		= false;
-	bDrawFASTCorners = true;
-	
-	ofBackground(0, 0, 0);
-	ofSetBackgroundAuto(true);
-	//ofDisableSetupScreen();
-	
-	font.loadFont("fonts/Calluna.ttf", 12);
+{z
 
 	CVD::ImageRef videoSize(VIDEO_SIZE);
 	ptam.videoSize = videoSize;

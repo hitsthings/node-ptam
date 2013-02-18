@@ -25,7 +25,7 @@ class ARDriver
 {
  public:
   ARDriver(const ATANCamera &cam, ImageRef irFrameSize);
-  void Render(Image<Rgb<byte> > &imFrame, SE3<> se3CamFromWorld);
+  void Render(Image<Rgb<CVD::byte> > &imFrame, SE3<> se3CamFromWorld);
   void Reset();
   void Init();
  protected:

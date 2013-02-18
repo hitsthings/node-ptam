@@ -1,5 +1,5 @@
 // Copyright 2008 Isis Innovation Limited
-#include "OpenGL.h"
+//#include "OpenGL.h"
 #include "CalibImage.h"
 #include <stdlib.h>
 #include <gvars3/instances.h>
@@ -124,18 +124,18 @@ bool CalibImage::MakeFromImage(Image<byte> &im)
     ImageRef irTopLeft(5,5);
     ImageRef irBotRight = mim.size() - irTopLeft;
     ImageRef ir = irTopLeft;
-    glPointSize(1);
-    glColor3f(1,0,1);
-    glBegin(GL_POINTS);
+    //glPointSize(1);
+    //glColor3f(1,0,1);
+    //glBegin(GL_POINTS);
     int nGate = GV2.GetInt("CameraCalibrator.MeanGate", 10, SILENT);
     do
       if(IsCorner(imBlurred, ir, nGate))
 	{
 	  mvCorners.push_back(ir);
-	  glVertex(ir);
+	  //glVertex(ir);
 	}
     while(ir.next(irTopLeft, irBotRight));
-    glEnd();
+    //glEnd();
   }
   
   // If there's not enough corners, i.e. camera pointing somewhere random, abort.
@@ -251,7 +251,7 @@ bool CalibImage::ExpandByAngle(int nSrc, int nDirn)
 
 void CalibGridCorner::Draw()
 {
-  glColor3f(0,1,0);
+  /*glColor3f(0,1,0);
   glEnable(GL_LINE_SMOOTH);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -260,7 +260,7 @@ void CalibGridCorner::Draw()
   glVertex(Params.v2Pos + Params.m2Warp() * vec(ImageRef(-10,0)));
   glVertex(Params.v2Pos + Params.m2Warp() * vec(ImageRef( 0, 10)));
   glVertex(Params.v2Pos + Params.m2Warp() * vec(ImageRef( 0,-10)));
-  glEnd();
+  glEnd();*/
 }
 
 
@@ -419,7 +419,7 @@ void CalibImage::ExpandByStep(int n)
 
 void CalibImage::DrawImageGrid()
 {
-  glLineWidth(2);
+  /*glLineWidth(2);
   glColor3f(0,0,1);
   glEnable(GL_LINE_SMOOTH);
   glEnable(GL_BLEND);
@@ -442,12 +442,12 @@ void CalibImage::DrawImageGrid()
   glBegin(GL_POINTS);
   for(unsigned int i=0; i<mvGridCorners.size(); i++)
     glVertex(mvGridCorners[i].Params.v2Pos);
-  glEnd();
+  glEnd();*/
 };
 
 void CalibImage::Draw3DGrid(ATANCamera &Camera, bool bDrawErrors)
 {
-  glLineWidth(2);
+  /*glLineWidth(2);
   glColor3f(0,0,1);
   glEnable(GL_LINE_SMOOTH);
   glEnable(GL_BLEND);
@@ -482,7 +482,7 @@ void CalibImage::Draw3DGrid(ATANCamera &Camera, bool bDrawErrors)
 	  glVertex(v2Pixels_Projected + 10.0 * v2Error);
 	}
       glEnd();
-    }
+    }*/
 };
 
 ImageRef CalibImage::IR_from_dirn(int nDirn)

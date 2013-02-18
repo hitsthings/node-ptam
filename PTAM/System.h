@@ -19,14 +19,14 @@ class ATANCamera;
 class Map;
 class MapMaker;
 class Tracker;
-class ARDriver;
-class MapViewer;
+//class ARDriver;
+//class MapViewer;
 
-class testApp;
+class PTAMWrap;
 
 class System
 {
-	friend class testApp;
+	friend class PTAMWrap;
 public:
 	void setup();
 	void update();
@@ -45,8 +45,8 @@ protected:
 private:
   Map *mpMap; 
   MapMaker *mpMapMaker; 
-  ARDriver *mpARDriver;
-  MapViewer *mpMapViewer;
+  //ARDriver *mpARDriver;
+  //MapViewer *mpMapViewer;
   
   bool mbDone;
 };
